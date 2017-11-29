@@ -19,15 +19,13 @@ public class Stack<E>
         }
         else
         {
-            int i = 0;
             Object[] newStack = new Object[stack.length*2];
-            for (int x = 0; x < size; x++)
+            for (int i = 0; i < size; i++)
             {
-                newStack[x] = stack[x];
-                i++;
+                newStack[i] = stack[i];
             }
             stack = newStack;
-            stack[size+1] = item;
+            stack[size] = item;
             size++;
             top = stack[size-1];
         }
