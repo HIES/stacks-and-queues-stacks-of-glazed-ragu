@@ -7,8 +7,11 @@ public class Queue<E>
     private class Node
     {
         private Node next;
-        public Node()
-        {}
+        private E nodeStuff;
+        public Node(E stuff)
+        {
+            this.nodeStuff = stuff;
+        }
     }
 
     public Queue()
@@ -25,15 +28,21 @@ public class Queue<E>
 
     public boolean isEmpty()
     {
+        if (size > 0)
+        {
+            return false;
+        }
+
         return true;
     }
 
     public void enqueue(E item)
     {
+        Node nItem = new Node(item);
         Node current = first;
         if (size == 0)
         {
-            first = (Node) item;
+            first = nItem;
             size++;
         }
         else 
@@ -42,7 +51,7 @@ public class Queue<E>
             {
                 current = current.next;
             }
-            current.next = (Node) item;
+            current.next = nItem;
             size++;
         }
     }
@@ -53,9 +62,15 @@ public class Queue<E>
         {
             throw new NoSuchElementException();
         }
-        return null;
+        else
+        {
+        Node temp = first;
+        first = first.next;
+        size--;
+        return temp.nodeStuff;
+        }
     }
-
+    
     public E peek()
     {
         if (size == 0)
@@ -64,9 +79,7 @@ public class Queue<E>
         }
         else
         {
-            //return first; ?
+            return first.nodeStuff; 
         }
-        return null;
     }
-
 }

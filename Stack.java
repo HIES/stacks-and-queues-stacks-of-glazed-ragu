@@ -4,7 +4,6 @@ public class Stack<E>
     private E top;
     private Object[] stack;
     private int size;
-
     public Stack()
     {
         stack = new Object[10];
@@ -13,7 +12,7 @@ public class Stack<E>
 
     public void push(E item)
     {
-        if (size < stack.length)
+        if (size < stack.length-1)
         { 
             if (stack[size+1] == null)
 
@@ -21,11 +20,12 @@ public class Stack<E>
                 stack[size+1] = item;
                 top = item;
                 size++;
+
             }
         }
         else
         {
-            Object[] newStack = new Object[size*4];
+            Object[] newStack = new Object[size*2];
             for (int x = 0; x < size; x++)
             {
                 newStack[x] = stack[x];
@@ -34,6 +34,7 @@ public class Stack<E>
             stack[size+1] = item;
             size++;
             top = item;
+
         }
     }
 
@@ -43,11 +44,8 @@ public class Stack<E>
         {
             throw new EmptyStackException();
         }
-         E temp = top;
-        if (size != 1)
-        {
-            top = (E) stack[size-1];
-        }
+        E temp = top;
+        top = (E) stack[size-1];
         stack[size-1] = null;
         size--;
         return temp;
