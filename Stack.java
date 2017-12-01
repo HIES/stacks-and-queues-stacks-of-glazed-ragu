@@ -1,6 +1,7 @@
+import java.util.EmptyStackException;
 public class Stack<E>
 {
-    private Object top;
+    private E top;
     private Object[] stack;
     private int size;
 
@@ -12,34 +13,53 @@ public class Stack<E>
 
     public void push(E item)
     {
-        if (size < stack.length && stack[size+1] == null)
-        {
-            stack[size+1] = item;
-            top = stack[size+1];
+        if (size < stack.length)
+        { 
+            if (stack[size+1] == null)
+
+            {
+                stack[size+1] = item;
+                top = item;
+                size++;
+            }
         }
         else
         {
-            Object[] newStack = new Object[stack.length*2];
-            for (int i = 0; i < size; i++)
+            Object[] newStack = new Object[size*4];
+            for (int x = 0; x < size; x++)
             {
-                newStack[i] = stack[i];
+                newStack[x] = stack[x];
             }
             stack = newStack;
-            stack[size] = item;
+            stack[size+1] = item;
             size++;
-            top = stack[size-1];
+            top = item;
         }
     }
 
     public E pop() 
     {
-
-        return null;
+        if (size == 0)
+        {
+            throw new EmptyStackException();
+        }
+         E temp = top;
+        if (size != 1)
+        {
+            top = (E) stack[size-1];
+        }
+        stack[size-1] = null;
+        size--;
+        return temp;
     }
 
-    public E peek()
+    public E peek() 
     {
-        return null;
+        if (size == 0)
+        {
+            throw new EmptyStackException();
+        }
+        return top;
     }
 
     public boolean isEmpty()
@@ -51,7 +71,6 @@ public class Stack<E>
                 return false;
             }
         }
-
         return true;
     }
 
